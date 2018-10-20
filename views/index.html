@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Home | Express Vue Starter Kit</title>
+                
+    </head>
+    <body>
+        <h1>Home</h1>
+        <div id="render">
+
+        </div>
+        <a href="/logout">log out</a>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+        <script>
+            function render(content) {
+                document.getElementById('render').innerHTML = content;
+            }
+            function getAccessToken() {
+                return document.cookie.match(/accessToken=(.*)(;|$)/)[1];
+            }
+
+            window.onload = function() {
+                var token = getAccessToken();
+                axios.get('http://localhost:3000/organizations', {headers: {Authorization: 'Bearer ' + token}}).then(function(result) {
+                    var names = result.data.map(function (org) { return '<li>' + org.name + '</li>'; });
+                    render('You are a member of these organizations: <ul>' + names.join('') + '</ul>');
+                }).catch(function(err) {
+                    console.log("caught error:", err);
+                    render('Sorry, there was an error');
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Log in | Express Vue Starter Kit</title>
+                
+    </head>
+    <body>
+        <h1>Log in</h1>
+        <button id="login">Log in</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+        <script>
+            document.getElementById('login').addEventListener('click', function() {
+                axios.post('http://localhost:3000/mockauth', {username: "38b86564-340f-499b-95d2-6a878c61661c", password: "pass"}).then(function(result) {
+                    document.cookie = 'accessToken=' + result.data.access_token;
+                    window.location = '/';
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+            })
+        </script>
+    </body>
+</html>
