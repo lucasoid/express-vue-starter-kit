@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static('client/dist'));
 
 app.listen(port, () => {
     console.log('listening on ' + port);
@@ -21,7 +21,7 @@ app.listen(port, () => {
 const LOGIN_PATH = '/login';
 const LOGOUT_PATH = '/logout';
 const HOME_PATH = '/';
-const ACCESS_TOKEN_KEY = 'accessToken';
+const ACCESS_TOKEN_KEY = 'access_token';
 
 const verifyToken = (req, res, next) => {
     if(req.cookies[ACCESS_TOKEN_KEY]) {
@@ -39,17 +39,18 @@ const verifyToken = (req, res, next) => {
 app.get(LOGIN_PATH, (req, res, next) => {
     // present login page
     // fetch and set token
-    res.sendFile('views/login.html', {root: __dirname}); 
+    res.sendFile('client/dist/login.html', {root: __dirname}); 
 });
 
 app.get(LOGOUT_PATH, (req, res, next) => {
     res.clearCookie(ACCESS_TOKEN_KEY);
     return res.redirect(LOGIN_PATH);
-})
+});
+
 app.get(HOME_PATH, verifyToken, (req, res, next) => {
-    // cool we're in, display the app
-    res.sendFile('views/index.html', {root: __dirname});
-})
+    res.sendFile('client/dist/app.html', {root: __dirname});
+});
+
 
 app.use((err, req, res, next) => {
     console.error(err);

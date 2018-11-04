@@ -1,0 +1,48 @@
+
+.grid {
+    display: flex;
+    background: #f1eee9;
+    padding: $card-gutter;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: $card-width;
+    height: $card-width * .8;
+    padding: $card-gutter;
+}
+.card.double {
+    width: (2 * $card-width) + (2 * $card-gutter);
+}
+
+.card-inner {
+    background-color: #fff;
+    height:100%;
+    box-shadow: 0px 0px 5px #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    header {
+        background: $color-primary;
+        color: #fff;
+        padding: $card-padding;
+    }
+    
+    header h3 {
+        margin: 0;
+        
+        .fa {
+            margin-right: $card-padding;
+        }
+    }
+
+    .card-content {
+        padding: $card-padding;
+    }
+
+    footer {
+        padding: $card-padding;
+    }
+
+}
