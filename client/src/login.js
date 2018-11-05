@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { store } from 'store';
 import Login from 'components/pages/Login';
 import ForgotPassword from 'components/pages/ForgotPassword';
 import './scss/login.scss';
@@ -13,6 +14,7 @@ const router = new VueRouter({
 
 const app = new Vue({
   router,
+  store,
   el: '#render',
     template: '<router-view></router-view>',
     router

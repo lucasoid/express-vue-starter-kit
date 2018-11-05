@@ -1,27 +1,40 @@
 <template>
-    <Page>
-        <PageHeader v-bind:userId="userId"></PageHeader>
-        <PageContent>
-            <CardGrid>
-                <Card title="Alerts" icon="bell" v-bind:footerComponent="footerComponent">
-                    Hi, this is some card content. Put some text here, or a list, or a graphic.
-                </Card>
-            </CardGrid>
-        </PageContent>
-        <PageFooter>
-            <FooterLoggedIn />
-        </PageFooter>
-    </Page>
+    <Root>
+        <Page>
+            <PageHeader v-bind:userId="userId"></PageHeader>
+            <PageContent>
+                <section class="box">
+                    <CardGrid>
+                        <Card title="Alerts" icon="bell" v-bind:footerComponent="footerComponent">
+                            Hi, this is some card content. Put some text here, or a list, or a graphic.
+                        </Card>
+                        <Card title="Team" icon="user-circle" v-bind:footerComponent="footerComponent">
+                            <div v-for="(user) in team" v-bind:key="user.id">
+                                <div>{{ [user.firstName, user.lastName].join(' ')}}</div>
+                                <div>{{ user.email }}</div>
+                                <hr/>
+                            </div>
+                        </Card>
+                    </CardGrid>
+                </section>
+            </PageContent>
+            <PageFooter>
+                <FooterLoggedIn />
+            </PageFooter>
+        </Page>
+    </Root>
 </template>
 
 <script>
+import Root from 'components/Root';
 import Page from 'components/Page';
-import PageHeader from 'components/Page/PageHeader';
-import PageContent from 'components/Page/PageContent';
-import PageFooter from 'components/Page/PageFooter';
+import PageHeader from 'components/Page/Header';
+import PageContent from 'components/Page/Content';
+import PageFooter from 'components/Page/Footer';
 import FooterLoggedIn from 'components/Footer/FooterLoggedIn';
 import Card from 'components/Card';
 import CardGrid from 'components/CardGrid';
+import { mapState } from 'vuex';
 
 const FooterComponent = {
     template: '<router-link to="/alerts">View all</router-link>'
@@ -33,8 +46,12 @@ export default {
     computed: {
         footerComponent () {
             return FooterComponent;
-        }
+        },
+        ...mapState({
+            team: (state) => state.selectedOrg.team.slice(0, 5)
+        })
     },
-    components: { Page, PageHeader, PageFooter, PageContent, Card, CardGrid, FooterLoggedIn }
+    components: { Root, Page, PageHeader, PageFooter, PageContent, Card, CardGrid, FooterLoggedIn },
+    
 }
 </script>

@@ -8,8 +8,7 @@ const getCachedToken = () => cookie.get(COOKIE_NAME);
 
 const persistToken = (tokenValue) => {
     const decoded = jwtDecode(tokenValue);
-    const expires = new Date(decoded.exp * 1000);
-    cookie.set(COOKIE_NAME, tokenValue, expires);
+    cookie.set(COOKIE_NAME, tokenValue, decoded.exp);
 }
 
 const acquireToken = ({username, password}) => {
@@ -26,13 +25,10 @@ const acquireToken = ({username, password}) => {
 
 const getUserIdFromToken = () => {
     const token = getCachedToken();
-    console.log("token?", token);
     if(!token) return false;
     const decoded = jwtDecode(getCachedToken());
-    console.log("token?", decoded);
     if(!decoded) return false;
     const sub = decoded.sub;
-    console.log("token?", sub);
     if(!sub) return false;
     return sub;
 }
