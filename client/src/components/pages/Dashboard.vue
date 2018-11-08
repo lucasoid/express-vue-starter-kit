@@ -9,7 +9,8 @@
                             Hi, this is some card content. Put some text here, or a list, or a graphic.
                         </Card>
                         <Card title="Team" icon="user-circle" v-bind:footerComponent="footerComponent">
-                            <div v-for="(user) in team" v-bind:key="user.id">
+                            <div v-if="!teamScope">Sorry, you don't have access to this content.</div>
+                            <div v-else v-for="(user) in team" v-bind:key="user.id">
                                 <div>{{ [user.firstName, user.lastName].join(' ')}}</div>
                                 <div>{{ user.email }}</div>
                                 <hr/>
@@ -48,7 +49,8 @@ export default {
             return FooterComponent;
         },
         ...mapState({
-            team: (state) => state.selectedOrg.team.slice(0, 5)
+            team: (state) => state.selectedOrg.team.slice(0, 5),
+            teamScope: (state) => state.selectedOrg.scopes.team
         })
     },
     components: { Root, Page, PageHeader, PageFooter, PageContent, Card, CardGrid, FooterLoggedIn },

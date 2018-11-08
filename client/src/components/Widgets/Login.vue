@@ -15,9 +15,11 @@
 
 <script>
 import { acquireToken } from 'utils/accessToken';
+import { store, actions } from 'store';
 
 export default {
     name: 'LoginWidget',
+    props: ['redirect'],
     data: () => ({
         username: '',
         password: '',
@@ -27,7 +29,11 @@ export default {
         login (event) {
             event.preventDefault();
             acquireToken({username: this.$data.username, password: this.$data.password}).then(result => {
-                window.location = '/';
+                store.commit({
+                    type: actions.SET_USER_LOGGED_IN,
+                    isLoggedIn: true
+                });
+                if(this.$props.redirect) window.location = this.$props.redirect;
             }).catch(err => {
                 this.$data.errorMessage = 'That didn\'t work. :(. Try again?';
                 console.log(err);

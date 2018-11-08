@@ -6,7 +6,7 @@
                 <div class="pure-g">
                     <div class="pure-u-1 pure-u-md-1-2 centered">
                         <h3><i class="fa fa-key"></i> Log in</h3>
-                        <LoginWidget />
+                        <LoginWidget redirect="/" />
                         <router-link to="/reset-password">Forgot password?</router-link>
                     </div>
                 </div>

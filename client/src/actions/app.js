@@ -8,6 +8,14 @@ const init = () => {
 
     const userId = getUserIdFromToken();
 
+    if(!userId) {
+        store.commit({
+            type: actions.SET_USER_LOGGED_IN,
+            isLoggedIn: false
+        });
+        return;
+    }
+    
     store.commit({
         type: actions.SET_USER,
         user: {

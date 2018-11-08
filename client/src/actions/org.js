@@ -19,7 +19,19 @@ const init = (orgId) => {
             type: actions.SET_TEAM,
             team: result
         });
-    }).catch(err => console.log(err));    
+        store.commit({
+            type: actions.SET_TEAM_SCOPE,
+            scope: true
+        });
+    }).catch(err => {
+        if(err.status && err.status === 401) {
+            store.commit({
+                type: actions.SET_TEAM_SCOPE,
+                scope: false
+            })
+        }
+        console.log(err);
+    });    
 }
 
 export {

@@ -1,9 +1,17 @@
 import axios from 'axios';
+import { store, actions } from 'store';
 import { getCachedToken } from 'utils/accessToken';
 import { API_BASE_URL } from 'constants';
 
 const get = ({endpoint, headers}) => {
     const token = getCachedToken();
+    if(!token) {
+        // reauth
+        store.commit({
+            type: actions.SET_USER_LOGGED_IN,
+            isLoggedIn: false
+        });
+    }
     console.log(API_BASE_URL + endpoint);
     return new Promise((resolve, reject) => {
         axios.get(API_BASE_URL + endpoint, {
@@ -13,7 +21,7 @@ const get = ({endpoint, headers}) => {
             }, headers)
         }).then((response) => {
             resolve(response.data);
-        }).catch(reject);
+        }).catch(err => reject(err.response));
     });    
 }
 
