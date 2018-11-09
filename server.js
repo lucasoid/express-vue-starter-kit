@@ -36,7 +36,7 @@ const verifyToken = (req, res, next) => {
     return res.redirect(LOGIN_PATH); 
 }
 
-app.get(LOGIN_PATH, (req, res, next) => {
+app.get(LOGIN_PATH + '(*)', (req, res, next) => {
     // present login page
     // fetch and set token
     res.sendFile('client/dist/login.html', {root: __dirname}); 
@@ -47,7 +47,7 @@ app.get(LOGOUT_PATH, (req, res, next) => {
     return res.redirect(LOGIN_PATH);
 });
 
-app.get(HOME_PATH, verifyToken, (req, res, next) => {
+app.get(HOME_PATH  + '(*)', verifyToken, (req, res, next) => {
     res.sendFile('client/dist/app.html', {root: __dirname});
 });
 
